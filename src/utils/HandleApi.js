@@ -1,24 +1,25 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const baseURL = "http://localhost:8888/todo";
+// const baseURL = "http://localhost:8888";
+const baseURL = "https://iamkoushik1999-todo-server.onrender.com";
 
 const getAllToDo = (setToDo) => {
-  axios.get(`${baseURL}/list`).then(({ data }) => {
+  axios.get(`${baseURL}/todo/list`).then(({ data }) => {
     setToDo(data);
   });
 };
 
 const addToDo = (text, setText, setToDo) => {
   axios
-    .post(`${baseURL}/create`, { text })
+    .post(`${baseURL}/todo/create`, { text })
     .then((data) => setText(""), Swal.fire("To Do Added!"), getAllToDo(setToDo))
     .catch((err) => Swal.fire("Error Adding"));
 };
 
 const updateToDo = (toDoId, text, setToDo, setText, setIsUpdating) => {
   axios
-    .put(`${baseURL}/update/${toDoId}`, { text })
+    .put(`${baseURL}/todo/update/${toDoId}`, { text })
     .then(
       (data) => setText(""),
       Swal.fire("To Do Updated!"),
@@ -30,7 +31,7 @@ const updateToDo = (toDoId, text, setToDo, setText, setIsUpdating) => {
 
 const deleteToDo = (toDoId, setToDo) => {
   axios
-    .delete(`${baseURL}/delete/${toDoId}`)
+    .delete(`${baseURL}/todo/delete/${toDoId}`)
     .then((data) => getAllToDo(setToDo), Swal.fire("To Do Deleted!"))
     .catch((err) => Swal.fire("Error deleting"));
 };
